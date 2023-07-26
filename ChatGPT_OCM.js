@@ -10,6 +10,8 @@
 // @run-at       document-ready
 // ==/UserScript==
 
+const OPENAI_API_KEY = "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";
+
 function waitForElement(selector) {
   return new Promise((resolve) => {
     if (document.querySelector(selector)) {
@@ -38,6 +40,33 @@ function callChatGPT() {
   //delete all \n in promt
   promt = promt.replace(/\n/g, " ");
   console.log("promt: " + promt);
+
+  //call ChatGPT
+  const prompt_prefix =
+    "Erstelle einen kompakten Text für ein Leistungsverzeichnis aus den folgenden Stichwörtern: " +
+    promt;
+  console.log("prompt_prefix: " + prompt_prefix);
+
+  const url = "https://api.openai.com/v1/chat/completions";
+  const data = {
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: "You are a helpful assistant." },
+      { role: "user", content: "Hello!" },
+    ],
+  };
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => console.log(data))
+    .catch((error) => console.error(error));
 }
 
 (function () {
