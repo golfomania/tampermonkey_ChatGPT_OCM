@@ -34,25 +34,32 @@ function waitForElement(selector) {
 
 function callChatGPT() {
   console.log("callChatGPT");
-  var promt = document
+  var prompt = document
     .querySelector("div.textEditor0 iframe")
     .contentWindow.document.querySelector("#tinymce").innerText;
-  //delete all \n in promt
-  promt = promt.replace(/\n/g, " ");
-  console.log("promt: " + promt);
+  //delete all \n in prompt
+  prompt = prompt.replace(/\n/g, " ");
+  console.log("prompt: " + prompt);
+
+  //set wait message
+  document
+    .querySelector("div.textEditor0 iframe")
+    .contentWindow.document.querySelector("#tinymce").innerText =
+    "...bitte warten...";
 
   //call ChatGPT
-  const prompt_prefix =
-    "Erstelle einen kompakten Text für ein Leistungsverzeichnis aus den folgenden Stichwörtern: " +
-    promt;
-  console.log("prompt_prefix: " + prompt_prefix);
-
   const url = "https://api.openai.com/v1/chat/completions";
   const data = {
     model: "gpt-3.5-turbo",
+    temperature: 0,
+    n: 1,
     messages: [
-      { role: "system", content: "You are a helpful assistant." },
-      { role: "user", content: "Hello!" },
+      {
+        role: "system",
+        content:
+          "Erstelle einen Langtext für eine Position in einem Leistungsverzeichnis für eine Ausschreibung aus den Stichpunkten des Users im Stil des Standardleistungsbuch STLB.",
+      },
+      { role: "user", content: prompt },
     ],
   };
 
@@ -65,17 +72,19 @@ function callChatGPT() {
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
-    .then((data) => console.log(data))
+    .then(
+      (data) =>
+        (document
+          .querySelector("div.textEditor0 iframe")
+          .contentWindow.document.querySelector("#tinymce").innerText =
+          data.choices[0].message.content)
+    )
     .catch((error) => console.error(error));
 }
 
 (function () {
   "use strict";
-  alert("before");
-
   waitForElement("div.textEditor0").then((elm) => {
-    alert("after");
-
     //wait until the element with the class "card-header__title" is loaded
     const interval = setInterval(function () {
       const langtext1 = document.querySelector("span.card-header__title");
