@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT_OCM
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.5
 // @description  Use ChatGPT in BRZ 365 OCM to create texts
 // @author       Martin Löffler
 // @match        https://ocm.brz365.eu/project-lv/389
@@ -82,8 +82,8 @@ function callChatGPT() {
     .catch((error) => console.error(error));
 }
 
-(function () {
-  "use strict";
+// add the button to the element with the class "card-header__title"
+function addChatGPTButton() {
   waitForElement("div.textEditor0").then((elm) => {
     //wait until the element with the class "card-header__title" is loaded
     const interval = setInterval(function () {
@@ -108,4 +108,8 @@ function callChatGPT() {
       }
     }
   });
+}
+(function () {
+  "use strict";
+  addChatGPTButton();
 })();
