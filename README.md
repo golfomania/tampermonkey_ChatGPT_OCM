@@ -19,3 +19,12 @@ see: https://www.brz.eu/
 ### OCM Module
 
 The offer and contract management module provides the possibility to create a "Leistungsverzeichnis (LV)" with short and long texts, where this script is helping to create these long texts based on a short description.
+
+## ChatGPT
+
+The API is used to create the long text description.
+You need to add your own API secret to the script.
+Cost per request (using the GPT-3.5 Turbo model) ~0,2 Eurocent.
+
+see: https://openai.com/pricing
+see: https://platform.openai.com/
