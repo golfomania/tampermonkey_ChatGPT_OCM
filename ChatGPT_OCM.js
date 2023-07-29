@@ -10,7 +10,7 @@
 // @run-at       document-ready
 // ==/UserScript==
 
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "<add you personal ChatGPT API key here>";
 
 function waitForElement(selector) {
   return new Promise((resolve) => {
