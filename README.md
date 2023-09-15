@@ -12,7 +12,7 @@ see: https://www.tampermonkey.net/
 
 ## BRZ 365 ERP
 
-Is a cloud based ERP system targeting the cosntruction business market.
+Is a cloud based ERP system targeting the construction business market.
 
 see: https://www.brz.eu/
 
